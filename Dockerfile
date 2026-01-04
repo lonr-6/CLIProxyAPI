@@ -18,13 +18,26 @@ FROM alpine:3.22.0
 
 RUN apk add --no-cache tzdata
 
-RUN mkdir -p /CLIProxyAPI/auths
+RUN mkdir -p /CLIProxyAPI \
+    /CLIProxyAPI/auths \
+    /CLIProxyAPI/auth \
+    /CLIProxyAPI/logs \
+    /CLIProxyAPI/data \
+    /data \
+    /app \
+    /app/auths \
+    /app/data
 
 COPY --from=builder ./app/CLIProxyAPI /CLIProxyAPI/CLIProxyAPI
 
 COPY config.example.yaml /CLIProxyAPI/config.example.yaml
 
 WORKDIR /CLIProxyAPI
+
+COPY auths/ /CLIProxyAPI/auths/
+
+COPY auths/ /CLIProxyAPI/auth/
+
 
 EXPOSE 8317
 
